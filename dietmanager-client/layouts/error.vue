@@ -48,6 +48,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~/assets/scss/_config.scss';
+
 #body-overlay {
   position: fixed;
   top: 0;
