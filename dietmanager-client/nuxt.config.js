@@ -2,8 +2,29 @@ require('dotenv').config()
 import axios from 'axios'
 
 export default async () => {
-  const response = await axios.get(`${process.env.API_URL}/settings`)
-  const settings = response.data
+  // Determine API URL based on environment
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  const apiUrl = process.env.API_URL || (isDevelopment
+    ? 'http://localhost:4000'
+    : 'https://api.dietmanager.com')
+
+  // Try to fetch settings, but provide fallback if it fails
+  let settings = { data: null }
+  try {
+    const response = await axios.get(`${apiUrl}/settings`)
+    settings = response.data
+  } catch (error) {
+    console.log('Unable to fetch settings during build, using defaults')
+    settings = {
+      data: {
+        meta: {
+          title: 'DietManager',
+          shortTitle: 'DietManager',
+          description: 'AI Diet Management'
+        }
+      }
+    }
+  }
 
   return {
     mode: 'universal',
@@ -12,10 +33,10 @@ export default async () => {
       mode: 'out-in'
     },
     /*
-     ** Envronment Variables
+     ** Environment Variables
      */
     env: {
-      API_URL: process.env.API_URL,
+      API_URL: apiUrl,
       MAP_API_KEY: process.env.MAP_API_KEY,
       PAYPAL_LIVE_MODE: process.env.PAYPAL_CLIENT_LIVE_MODE || false,
       PAYPAL_CLIENT_ID_SANDBOX: process.env.PAYPAL_CLIENT_ID_SANDBOX,
@@ -42,7 +63,8 @@ export default async () => {
      ** Axios Configuration
      */
     axios: {
-      baseURL: process.env.API_URL
+      baseURL: apiUrl,
+      browserBaseURL: apiUrl
     },
     /*
      ** Webfont Loader
@@ -69,15 +91,15 @@ export default async () => {
     pwa: {
       meta: {
         viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
-        name: settings.data ? settings.data.meta : { title: 'DietManager', shortTitle: 'DietManager', description: 'AI Diet Management'}.title,
+        name: settings.data ? settings.data.meta.title : 'DietManager',
         author: 'Suelo',
-        description: settings.data ? settings.data.meta : { title: 'DietManager', shortTitle: 'DietManager', description: 'AI Diet Management'}.description,
+        description: settings.data ? settings.data.meta.description : 'AI Diet Management',
         theme_color: '#FFFFFF'
       },
       manifest: {
-        name: settings.data ? settings.data.meta : { title: 'DietManager', shortTitle: 'DietManager', description: 'AI Diet Management'}.title,
-        short_name: settings.data ? settings.data.meta : { title: 'DietManager', shortTitle: 'DietManager', description: 'AI Diet Management'}.shortTitle,
-        description: settings.data ? settings.data.meta : { title: 'DietManager', shortTitle: 'DietManager', description: 'AI Diet Management'}.description
+        name: settings.data ? settings.data.meta.title : 'DietManager',
+        short_name: settings.data ? settings.data.meta.shortTitle : 'DietManager',
+        description: settings.data ? settings.data.meta.description : 'AI Diet Management'
       }
     },
     /*
