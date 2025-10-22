@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DietManager - AI Diet Management</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #4AA36B 0%, #5FB77F 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        h1 { font-size: 3rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: #4AA36B;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .api-info {
+            margin-top: 3rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .api-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .api-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🥗 DietManager</h1>
+        <p>AI-Powered Diet Management System</p>
+
+        <div class="buttons">
+            <a href="http://localhost:3000" class="btn">Open Local App</a>
+        </div>
+
+        <div class="api-info">
+            <h3>API Endpoints Available:</h3>
+            <div class="api-links">
+                <a href="/api/settings">/api/settings</a>
+                <a href="/api/menu-items">/api/menu-items</a>
+                <a href="/api/menu-categories">/api/menu-categories</a>
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.7;">
+            Full Nuxt.js application coming soon
+        </p>
+    </div>
+</body>
+</html>

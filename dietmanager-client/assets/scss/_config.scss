@@ -1,0 +1,56 @@
+// SASS Configuration File
+// This file is injected globally via styleResources
+
+// Import include-media first (only once)
+@import '~include-media/dist/_include-media';
+
+// Define color variables that are needed
+:root {
+  --color-primary: #4AA36B;
+  --color-primary-light: #5FB77F;
+  --color-primary-dark: #3A8357;
+}
+
+// Import variables (which includes all other variables and mixins)
+@import 'variables';
+
+// Apply theme to :root
+:root {
+  &[data-theme-inverted='false'] {
+    @include theme-default;
+  }
+
+  &[data-theme-inverted='true'] {
+    @include theme-inverted;
+  }
+}
+
+// Additional section-hero mixin that uses media queries
+@mixin section-hero {
+  height: calc(100vh - #{$header-height});
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+
+  @include media('<=lg') {
+    height: auto;
+  }
+
+  @include media('>lg') {
+    .body-padded & {
+      height: calc(100vh - #{$header-height} - 30px);
+    }
+  }
+
+  .header-absolute & {
+    @include media('>lg') {
+      @include fullheight;
+    }
+  }
+
+  .body-padded .header-absolute & {
+    @include media('>lg') {
+      height: calc(100vh - 30px);
+    }
+  }
+}
