@@ -135,6 +135,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/scss/_config.scss';
+
 #footer {
   @include media('<=xs') {
     padding-bottom: 2rem;
