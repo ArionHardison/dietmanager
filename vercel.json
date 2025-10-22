@@ -1,8 +1,29 @@
 {
   "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "@vercel/node@3.0.26"
+  "builds": [
+    {
+      "src": "dietmanager-client/nuxt.config.js",
+      "use": "@nuxtjs/vercel-builder",
+      "config": {
+        "serverFiles": ["dietmanager-client/package.json"]
+      }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dietmanager-client/$1"
+    }
+  ],
+  "env": {
+    "API_URL": "https://api.dietmanager.com"
   }
 }
